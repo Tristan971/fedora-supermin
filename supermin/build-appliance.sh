@@ -1,27 +1,12 @@
 #!/usr/bin/env bash
 
-function dirof() {
-    dirname "$(realpath "$1")"
-}
-
-# there's a lot to say about $0, but the TL;DR is that it works
-# if you're reasonable. Be reasonable.
-EXEC=$(realpath "$0")
-echo "Executing $EXEC"
-
-EXEC_DIR=$(dirof "$EXEC")
-echo "Moving to: $EXEC_DIR"
-
-pushd "$EXEC_DIR" > /dev/null || exit 1
+set -euo pipefail
 
 if ! command -v supermin > /dev/null; then
     echo "Supermin binary not found in PATH! Install it first."
     exit 1
 fi
 
-pushd "$(dirof "$EXEC")" > /dev/null || exit 1
-
-SUPERMIN_FOLDER=$(pwd)
 echo "Supermin work directory: $SUPERMIN_FOLDER"
 
 APPLIANCE_FOLDER=$SUPERMIN_FOLDER/prepare
@@ -43,9 +28,6 @@ supermin2 -o "$APPLIANCE_FOLDER" --use-installed --prepare $(< "$PACKAGES")
 
 supermin2 --build --format chroot "$APPLIANCE_FOLDER" -o "$BUILD_FOLDER"
 
-tar --create "$BUILD_FOLDER" | xz --best > "$SUPERMIN_FOLDER"/image.tar.xz
-
-echo "Created image at $SUPERMIN_FOLDER/image.tar.xz"
+echo "Built rootfs at $BUILD_FOLDER"
 
 echo "Returning to original directory"
-popd > /dev/null || exit 1

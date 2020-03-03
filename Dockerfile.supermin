@@ -1,0 +1,14 @@
+FROM fedora:31 AS supermin-builder
+
+RUN dnf makecache
+RUN dnf install -y \
+  supermin \
+  xz
+
+COPY supermin /supermin
+
+ENV SUPERMIN_FOLDER /supermin
+
+RUN /supermin/build-appliance.sh $SUPERMIN_FOLDER
+
+RUN /supermin/archive-appliance-rootfs.sh $SUPERMIN_FOLDER/build $SUPERMIN_FOLDER/image.tar.xz

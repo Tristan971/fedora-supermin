@@ -1,0 +1,5 @@
+FROM scratch
+
+ADD supermin/tmp/image.tar.xz /
+
+CMD "/bin/bash"
