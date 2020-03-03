@@ -24,10 +24,10 @@ pushd "$(dirof "$EXEC")" > /dev/null || exit 1
 SUPERMIN_FOLDER=$(pwd)
 echo "Supermin work directory: $SUPERMIN_FOLDER"
 
-APPLIANCE_FOLDER=$SUPERMIN_FOLDER/appliance.d
+APPLIANCE_FOLDER=$SUPERMIN_FOLDER/prepare
 echo "Appliance output folder: $APPLIANCE_FOLDER"
 
-BUILD_FOLDER=$SUPERMIN_FOLDER/dist
+BUILD_FOLDER=$SUPERMIN_FOLDER/build
 echo "Build output folder: $BUILD_FOLDER"
 
 PACKAGES=$SUPERMIN_FOLDER/PACKAGES
