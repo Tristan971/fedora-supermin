@@ -27,12 +27,21 @@ echo "Supermin work directory: $SUPERMIN_FOLDER"
 APPLIANCE_FOLDER=$SUPERMIN_FOLDER/appliance.d
 echo "Appliance output folder: $APPLIANCE_FOLDER"
 
+BUILD_FOLDER=$SUPERMIN_FOLDER/dist
+echo "Build output folder: $BUILD_FOLDER"
+
 PACKAGES=$SUPERMIN_FOLDER/PACKAGES
 echo "Packages list file: $PACKAGES"
 
+function supermin2() {
+    supermin -v --lock /tmp/supermin.lock --if-newer "$@"
+}
+
 # we DO want word splitting in this case
 # shellcheck disable=SC2046
-supermin -v -o "$APPLIANCE_FOLDER" --prepare $(< "$PACKAGES")
+supermin2 -o "$APPLIANCE_FOLDER" --use-installed --prepare $(< "$PACKAGES")
+
+supermin2 --build --format chroot "$APPLIANCE_FOLDER" -o "$BUILD_FOLDER"
 
 echo "Returning to original directory"
 popd > /dev/null || exit 1
