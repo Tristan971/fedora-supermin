@@ -45,5 +45,7 @@ supermin2 --build --format chroot "$APPLIANCE_FOLDER" -o "$BUILD_FOLDER"
 
 tar --create "$BUILD_FOLDER" | xz --best > "$SUPERMIN_FOLDER"/image.tar.xz
 
+echo "Created image at $SUPERMIN_FOLDER/image.tar.xz"
+
 echo "Returning to original directory"
 popd > /dev/null || exit 1
