@@ -1,3 +1,11 @@
 bash
+zsh
 coreutils
 dnf
+curl
+dhcp-client
+kernel
+openssh-clients
+openssh-server
+passwd
+sudo
