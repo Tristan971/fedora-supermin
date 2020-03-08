@@ -9,3 +9,5 @@ openssh-clients
 openssh-server
 passwd
 sudo
+grub2-pc
+grub2-efi-x64
